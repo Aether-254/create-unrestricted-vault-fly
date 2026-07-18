@@ -7,7 +7,7 @@ import com.zurrtum.create.content.logistics.vault.ItemVaultBlock;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,13 +27,13 @@ abstract class ItemVaultCTBehaviourMixin {
         if (ItemVaultBlock.getVaultBlockAxis(state) != Direction.Axis.Y)
             return;
 
-        boolean small = !ItemVaultBlock.isLarge(state);
+        boolean large = ItemVaultBlock.isLarge(state);
         if (direction == Direction.UP)
-            cir.setReturnValue(AllSpriteShifts.VAULT_FRONT.get(small));
+            cir.setReturnValue(large ? AllSpriteShifts.VAULT_FRONT_LARGE : AllSpriteShifts.VAULT_FRONT_MEDIUM);
         else if (direction == Direction.DOWN)
-            cir.setReturnValue(AllSpriteShifts.VAULT_BOTTOM.get(small));
+            cir.setReturnValue(large ? AllSpriteShifts.VAULT_BOTTOM_LARGE : AllSpriteShifts.VAULT_BOTTOM_MEDIUM);
         else
-            cir.setReturnValue(AllSpriteShifts.VAULT_SIDE.get(small));
+            cir.setReturnValue(large ? AllSpriteShifts.VAULT_SIDE_LARGE : AllSpriteShifts.VAULT_SIDE_MEDIUM);
     }
 
     @Inject(method = "getUpDirection", at = @At("HEAD"), cancellable = true)
