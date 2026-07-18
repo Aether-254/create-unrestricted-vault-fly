@@ -27,13 +27,13 @@ abstract class ItemVaultCTBehaviourMixin {
         if (ItemVaultBlock.getVaultBlockAxis(state) != Direction.Axis.Y)
             return;
 
-        boolean large = ItemVaultBlock.isLarge(state);
+        boolean small = !ItemVaultBlock.isLarge(state);
         if (direction == Direction.UP)
-            cir.setReturnValue(large ? AllSpriteShifts.VAULT_FRONT_LARGE : AllSpriteShifts.VAULT_FRONT_MEDIUM);
+            cir.setReturnValue(AllSpriteShifts.VAULT_FRONT.get(small));
         else if (direction == Direction.DOWN)
-            cir.setReturnValue(large ? AllSpriteShifts.VAULT_BOTTOM_LARGE : AllSpriteShifts.VAULT_BOTTOM_MEDIUM);
+            cir.setReturnValue(AllSpriteShifts.VAULT_BOTTOM.get(small));
         else
-            cir.setReturnValue(large ? AllSpriteShifts.VAULT_SIDE_LARGE : AllSpriteShifts.VAULT_SIDE_MEDIUM);
+            cir.setReturnValue(AllSpriteShifts.VAULT_SIDE.get(small));
     }
 
     @Inject(method = "getUpDirection", at = @At("HEAD"), cancellable = true)
